@@ -1,8 +1,9 @@
 //testKnockoutVM.js
-require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/koExtenders/observableValidation.js', './javascripts/koExtenders/observableArrayMapping.js','./javascripts/domready.js'], function (ko) {
+require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/ajaxhelpers/ajaxGet.js', './javascripts/koExtenders/observableValidation.js', './javascripts/koExtenders/observableArrayMapping.js','./javascripts/domready.js'], 
+    function (ko, ajaxGet) {
 
     //mock data
-    var personsFromServer = [
+    /*var personsFromServer = [
         { username: "John", age: 29, role: "Daimyo", order: 1 },
         { username: "Bob", age: 37, role: "Samurai" },
         { username: "Steve", age: 45, role: "Ninja" },
@@ -18,7 +19,9 @@ require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/koExtenders/obs
         { username: "Veronica", age: 37 },
         { username: "Brigitte", age: 45 },
         { username: "Salomon", age: 15 }
-    ];
+    ];*/
+
+    var personsFromServer = [];
 
     var Person = function (data, orderNum) {
         this.username = ko.observable(data.username)
@@ -35,7 +38,8 @@ require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/koExtenders/obs
 
     //--------------------Main ViewModel-----------------------//
     var ViewModel = function () {
-        this.persons = ko.observableArray().mapPersons(personsFromServer, Person);
+        this.getPersonsFromServer()
+        this.persons = ko.observableArray();
         this.selectedPerson = ko.observable(this.persons()[0]);
         this.availableRoles = ko.observableArray(["Samurai", "Ninja", "Daimyo", "Peasant"]);
 
@@ -94,15 +98,17 @@ require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/koExtenders/obs
         }, this);
 
         //functions bindings
-        
+        //person
         this.selectPerson = this.selectPerson.bind(this);
         this.addPerson = this.addPerson.bind(this);
         this.removePerson = this.removePerson.bind(this);
-
+        //pager
         this.firstPage = this.firstPage.bind(this);
         this.previousPage = this.previousPage.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.lastPage = this.lastPage.bind(this);
+        //loading
+        this.getPersonsFromServer = this.getPersonsFromServer.bind(this);
     };
 
     //--------------------ViewModel prototypes-----------------------//
@@ -127,24 +133,38 @@ require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/koExtenders/obs
 
     ViewModel.prototype.firstPage = function () {
         this.pageIndex(0);
-    }
+    };
 
     ViewModel.prototype.previousPage = function () {
         if(this.pageIndex() >= 1){
             this.pageIndex(this.pageIndex() - 1);
         }
-    }
+    };
 
     ViewModel.prototype.nextPage = function () {
         if(this.pageIndex() < this.maxPageIndex()){
             this.pageIndex(this.pageIndex() + 1);
         }
-    }
+    };
 
     ViewModel.prototype.lastPage = function () {
         this.pageIndex(this.maxPageIndex());
-    }
+    };
 
+    ViewModel.prototype.getPersonsFromServer = function() {
+        var thus = this;
+        ajaxGet('http://localhost:3000/getpersons').then(function (res) {
+            personsFromServer = JSON.parse(res);
+            var order = 1;
+            var mapped = ko.utils.arrayMap(personsFromServer, function (item) {
+                return new Person(item, order++);
+            });
+            thus.persons(mapped);
+        }, function (error) {
+            console.error(error);
+        });
+    };
+    
     var mainViewModel = new ViewModel();
     ko.applyBindings(mainViewModel);
 });

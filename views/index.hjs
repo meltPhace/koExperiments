@@ -32,6 +32,8 @@
 
         <h1>{{ title }}</h1>
         <br>
+        <button type="button" class="btn btn-default" data-bind="click: $root.getPersonsFromServer">Populate</button>
+        <br><br>
         <div class="row">
             <div class="col-md-2">
                 <input class="form-control"  data-bind="textInput: textFilter" placeholder="filter by username..."/>
