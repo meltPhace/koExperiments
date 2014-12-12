@@ -16,11 +16,17 @@ a {
   color: red;
 }
 
+.selectedRow{
+  background-color: #333;
+  color: #fff;
+}
+
 .greenCustom{
 	background-color: #008299;
 }
 
 .footer{
-	height: 2em;
-	background-color: #333;
+	height: 1..5em;
+  width:15%;
+  margin: 0 auto;
 }

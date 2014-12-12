@@ -24,10 +24,7 @@
                 </div>
                 <div id="navbar" class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        <li><a href="/446">ckeditor 4.4.6</a></li>
-                        <li><a href="/443">ckeditor 4.4.3</a></li>
-                        <li><a href="/352">ckeditor 3.5.2</a></li>
-                        <li><a href="/35">ckeditor 3.5</a></li>
+                        <li><a href="/">Here</a></li>
                     </ul>
                 </div>
             </div>
@@ -54,7 +51,7 @@
                     </thead>
                     <tbody>
                         <!--ko foreach: pagedFilteredPersons-->
-                            <tr data-bind="click: $parent.selectPerson($data), css: { greenCustom: $parent.selectedPerson() == $data }">
+                            <tr data-bind="click: $parent.selectPerson($data), css: { selectedRow: $parent.selectedPerson() == $data }">
                                 <td data-bind="text: order"></td>
                                 <td data-bind="text: username"></td>
                                 <td data-bind="text: age"></td>
@@ -64,12 +61,14 @@
                     </tbody>
                 </table>
                 <div class="footer">
-                    <a href="#" data-bind="click: firstPage"> << </a>
-                    <a href="#" data-bind="click: previousPage"> < </a>
-                    <span data-bind="text: pageIndexDisplay"></span>
-                    <a href="#" data-bind="click: nextPage"> > </a>
-                    <a href="#" data-bind="click: lastPage"> >> </a>
-                    <select data-bind="options: pageSizeOptions, value: pageSize"></select>
+                    <div class="centered-footer-options">
+                        <a href="#" data-bind="click: firstPage"> << </a>
+                        <a href="#" data-bind="click: previousPage"> < </a>
+                        <span data-bind="text: pageIndexDisplay"></span>
+                        <a href="#" data-bind="click: nextPage"> > </a>
+                        <a href="#" data-bind="click: lastPage"> >> </a>
+                        <select data-bind="options: pageSizeOptions, value: pageSize"></select>
+                    </div>
                 </div>
             </div>
         </div>
