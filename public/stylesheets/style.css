@@ -1,0 +1,26 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+
+.error{
+  color: red;
+}
+
+.greenCustom{
+	background-color: #008299;
+}
+
+.footer{
+	height: 2em;
+	background-color: #333;
+}
