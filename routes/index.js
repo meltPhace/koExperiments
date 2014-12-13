@@ -4,6 +4,7 @@ var mock = require('../data/mockPersons');
 
 /* GET home page. */
 router.get('/', function(req, res) {
+	//var fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
   res.render('index', { title: 'observable validation test' });
 });
 

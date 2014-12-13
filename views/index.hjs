@@ -11,6 +11,7 @@
         <script type="text/javascript" data-main="./javascripts/viewmodels/testKnockoutVM.js" src="./javascripts/require-2.1.15.js"></script>
     </head>
     <body>
+        <!-- <span type="hidden" id="url">{{url}}</span> -->
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container">
                 <div class="navbar-header">
@@ -32,8 +33,6 @@
 
         <h1>{{ title }}</h1>
         <br>
-        <button type="button" class="btn btn-default" data-bind="click: $root.getPersonsFromServer">Populate</button>
-        <br><br>
         <div class="row">
             <div class="col-md-2">
                 <input class="form-control"  data-bind="textInput: textFilter" placeholder="filter by username..."/>

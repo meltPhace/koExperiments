@@ -1,26 +1,6 @@
 //testKnockoutVM.js
 require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/ajaxhelpers/ajaxGet.js', './javascripts/koExtenders/observableValidation.js', './javascripts/koExtenders/observableArrayMapping.js','./javascripts/domready.js'], 
     function (ko, ajaxGet) {
-
-    //mock data
-    /*var personsFromServer = [
-        { username: "John", age: 29, role: "Daimyo", order: 1 },
-        { username: "Bob", age: 37, role: "Samurai" },
-        { username: "Steve", age: 45, role: "Ninja" },
-        { username: "Steven", age: 15, role: "Samurai" },
-        { username: "Jim", age: 29 },
-        { username: "Rob", age: 37 },
-        { username: "Stuart", age: 45 },
-        { username: "Paul", age: 15 },
-        { username: "Bob", age: 37 },
-        { username: "Jones", age: 45 },
-        { username: "Rita", age: 15 },
-        { username: "Mary", age: 29 },
-        { username: "Veronica", age: 37 },
-        { username: "Brigitte", age: 45 },
-        { username: "Salomon", age: 15 }
-    ];*/
-
     var personsFromServer = [];
 
     var Person = function (data, orderNum) {
@@ -153,7 +133,7 @@ require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/ajaxhelpers/aja
 
     ViewModel.prototype.getPersonsFromServer = function() {
         var thus = this;
-        ajaxGet('http://localhost:3000/getpersons').then(function (res) {
+        ajaxGet('/getpersons').then(function (res) {
             personsFromServer = JSON.parse(res);
             var order = 1;
             var mapped = ko.utils.arrayMap(personsFromServer, function (item) {
