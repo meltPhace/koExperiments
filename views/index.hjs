@@ -52,7 +52,7 @@
                     </thead>
                     <tbody>
                         <!--ko foreach: pagedFilteredPersons-->
-                            <tr data-bind="click: $parent.selectPerson($data), css: { selectedRow: $parent.selectedPerson() == $data }">
+                            <tr data-bind="click: function(){$parent.selectPerson($data)}, css: { selectedRow: $parent.selectedPerson() == $data }">
                                 <td data-bind="text: order"></td>
                                 <td data-bind="text: username"></td>
                                 <td data-bind="text: age"></td>
