@@ -1,6 +1,6 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;*/
 }
 
 a {
@@ -27,6 +27,11 @@ a {
 
 .footer{
 	height: 1.5em;
-  width:15%;
+  width:30%;
   margin: 0 auto;
+}
+
+#displaySizeSelect{  
+  display: inline;
+  width:5em;
 }

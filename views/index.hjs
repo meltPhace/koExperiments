@@ -63,12 +63,20 @@
                 </table>
                 <div class="footer">
                     <div class="centered-footer-options">
-                        <a href="#" data-bind="click: firstPage"> << </a>
-                        <a href="#" data-bind="click: previousPage"> < </a>
-                        <span data-bind="text: pageIndexDisplay"></span>
-                        <a href="#" data-bind="click: nextPage"> > </a>
-                        <a href="#" data-bind="click: lastPage"> >> </a>
-                        <select data-bind="options: pageSizeOptions, value: pageSize"></select>
+                        <button type="button" data-bind="click: firstPage" class="btn btn-default">
+                            <span class="glyphicon glyphicon-fast-backward"></span>
+                        </button>
+                        <button type="button" data-bind="click: previousPage" class="btn btn-default">
+                            <span class="glyphicon glyphicon-step-backward"></span>
+                        </button>
+                        <span class="badge" data-bind="text: pageIndexDisplay"></span>
+                        <button type="button" data-bind="click: nextPage" class="btn btn-default">
+                            <span class="glyphicon glyphicon-step-forward"></span>
+                        </button>
+                        <button type="button" data-bind="click: lastPage" class="btn btn-default">
+                            <span class="glyphicon glyphicon-fast-forward"></span>
+                        </button>
+                        <select id="displaySizeSelect" class="form-control" data-bind="options: pageSizeOptions, value: pageSize"></select>
                     </div>
                 </div>
             </div>
