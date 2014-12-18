@@ -1,20 +1,8 @@
 //testKnockoutVM.js
-require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/ajaxhelpers/ajaxGet.js', './javascripts/koExtenders/observableValidation.js', './javascripts/koExtenders/observableArrayMapping.js','./javascripts/domready.js'], 
-    function (ko, ajaxGet) {
+require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/ajaxhelpers/ajaxGet.js', './javascripts/viewmodels/PersonVM.js', './javascripts/koExtenders/observableArrayMapping.js','./javascripts/domready.js'], function (ko, ajaxGet, Person) {
+
+    //Global variables
     var personsFromServer = [];
-
-    var Person = function (data, orderNum) {
-        this.username = ko.observable(data.username)
-            .maxLengthWithMessage(20)
-            .required();
-
-        this.age = ko.observable(data.age)
-            .numberOnly()
-            .maxLengthWithoutMessage(3);
-
-        this.role = ko.observable(data.role || "Peasant");
-        this.order = ko.observable(data.order || orderNum);
-    };
 
     //--------------------Main ViewModel-----------------------//
     var ViewModel = function () {
