@@ -52,7 +52,7 @@
                     </thead>
                     <tbody>
                         <!--ko foreach: pagedFilteredPersons-->
-                            <tr data-bind="click: $parent.selectPerson($data), css: { selectedRow: $parent.selectedPerson() == $data }">
+                            <tr data-bind="click: function(){$parent.selectPerson($data)}, css: { selectedRow: $parent.selectedPerson() == $data }">
                                 <td data-bind="text: order"></td>
                                 <td data-bind="text: username"></td>
                                 <td data-bind="text: age"></td>
@@ -75,35 +75,50 @@
         </div>
         <br>
         <div class="row">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <p>
-                    <button type="button" class="btn btn-default btn-lg btn-block greenCustom" data-bind="click: $root.addPerson">Add person</button>
-                    <button type="button" class="btn btn-danger btn-lg btn-block" data-bind="click: $root.removePerson">Remove</button>
+                    <button type="button" class="btn btn-primary btn-lg btn-block" data-bind="click: $root.addPerson">Add person</button>
+                    <button type="button" class="btn btn-danger btn-lg btn-block" data-bind="click: $root.removePerson">Remove selected person</button>
+                    <button type="button" class="btn btn-success btn-lg btn-block" data-bind="click: $root.savePersons">Save persons</button>
                 </p>
             </div>
             <!--ko with: selectedPerson-->
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="usernameInput">username: </label>
-                        <input id="usernameInput" class="form-control" data-bind="textInput: username" />
-                        <p class="error" data-bind="visible: username.hasMaxLengthError, text: username.maxLengthMsg"></p>
-                        <p class="error" data-bind="visible: username.hasRequiredError, text: username.requiredMsg"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="ageInput">age: </label>
-                        <input id="ageInput" class="form-control" data-bind="textInput: age" />
-                        <p class="error" data-bind="visible: age.hasNumberOnlyError, text: age.numberOnlyMsg"></p>
-                    </div>
-                    <div class="form-group">
-                        <label for="ageInput">role: </label>
-                        <select id="roleInput" class="form-control" data-bind="options: $parent.availableRoles, value: role"></select>
-                    </div>
+                <div class="col-md-7">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="usernameInput">username: </label>
+                            <div class="col-sm-8">
+                                <input id="usernameInput" class="form-control" data-bind="textInput: username" />
+                                <p class="error" data-bind="visible: username.hasMaxLengthError, text: username.maxLengthMsg"></p>
+                                <p class="error" data-bind="visible: username.hasRequiredError, text: username.requiredMsg"></p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="ageInput">age: </label>
+                            <div class="col-sm-8">
+                            <input id="ageInput" class="form-control" data-bind="textInput: age" />
+                            <p class="error" data-bind="visible: age.hasNumberOnlyError, text: age.numberOnlyMsg"></p>
+                        </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label" for="ageInput">role: </label>
+                            <div class="col-sm-8">
+                                <select id="roleInput" class="form-control" data-bind="options: $parent.availableRoles, value: role"></select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-4">
+                                <button class="btn btn-default" data-bind="click: $root.deselectPerson">Ok</button>
+                                <button class="btn btn-default" data-bind="visible: $root.justAdded ,click: $root.removePerson">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             <!--/ko-->
         </div>
         <br>
         <div class="row">
-            <pre data-bind="text: ko.toJSON($data, null, 2)"></pre>
+            <pre data-bind="text: $data.lastSavedJson"></pre>
         </div>
     </body>
 </html>

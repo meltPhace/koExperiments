@@ -20,8 +20,12 @@ require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/ajaxhelpers/aja
     var ViewModel = function () {
         this.getPersonsFromServer()
         this.persons = ko.observableArray();
-        this.selectedPerson = ko.observable(this.persons()[0]);
+        this.selectedPerson = ko.observable();
         this.availableRoles = ko.observableArray(["Samurai", "Ninja", "Daimyo", "Peasant"]);
+        this.lastSavedJson = ko.observable();
+
+        //flags
+        this.justAdded = ko.observable(false);
 
         //filters
         this.textFilter = ko.observable("");
@@ -82,21 +86,28 @@ require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/ajaxhelpers/aja
         this.selectPerson = this.selectPerson.bind(this);
         this.addPerson = this.addPerson.bind(this);
         this.removePerson = this.removePerson.bind(this);
+        this.deselectPerson = this.deselectPerson.bind(this);
         //pager
         this.firstPage = this.firstPage.bind(this);
         this.previousPage = this.previousPage.bind(this);
         this.nextPage = this.nextPage.bind(this);
         this.lastPage = this.lastPage.bind(this);
-        //loading
+        //loading & saving
         this.getPersonsFromServer = this.getPersonsFromServer.bind(this);
+        this.savePersons = this.savePersons.bind(this);
     };
 
     //--------------------ViewModel prototypes-----------------------//
     ViewModel.prototype.selectPerson = function(value) {
+        if(this.justAdded()){
+            this.persons.remove(this.selectedPerson());
+        }
+        this.justAdded(false);
         this.selectedPerson(value);
     };
 
-    ViewModel.prototype.addPerson = function() {
+    ViewModel.prototype.addPerson = function() {        
+        this.justAdded(true);
         this.selectedPerson(new Person({ username: "", age: 0, order: this.persons().length + 1 }));
         this.persons.push(this.selectedPerson());
     };
@@ -109,6 +120,11 @@ require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/ajaxhelpers/aja
                 this.selectedPerson(null);
             }
         }else window.alert('Please select a person before trying to remove it');
+    };
+
+    ViewModel.prototype.deselectPerson = function() {
+        this.justAdded(false);
+        this.selectedPerson(null);
     };
 
     ViewModel.prototype.firstPage = function () {
@@ -145,6 +161,10 @@ require(['./javascripts/knockout-3.2.0.debug.js', './javascripts/ajaxhelpers/aja
         });
     };
     
+    ViewModel.prototype.savePersons = function() {
+        this.lastSavedJson(ko.toJSON(this.persons(), null, 2));
+    };
+
     var mainViewModel = new ViewModel();
     ko.applyBindings(mainViewModel);
 });
